@@ -5,101 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>playClass</title>
 </head>
-<body>
-<div class="audio-container">
-    <div id="audio-details">
-        <img id="audio-thumbnail" src="https://via.placeholder.com/150" alt="Song Thumbnail">
-        <h3 id="song-name">Song Name</h3>
-        <p id="artist-name">Artist Name</p>
+<body style="margin: 0; padding: 0; background-color: #1a1a1a;">
+<div class="audio-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
+    <div id="audio-details" style="display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; margin-bottom: 20px;">
+        <img id="audio-thumbnail" src="https://via.placeholder.com/150" alt="Song Thumbnail" style="width: 150px; height: 150px; border-radius: 10px; margin-bottom: 20px;">
+        <h3 id="song-name" style="margin: 0; color: #fff;">Song Name</h3>
+        <p id="artist-name" style="margin: 0; color: #fff;">Artist Name</p>
     </div>
-    <div id="player-controls">
-        <button id="previous-button" class="control-button">Previous</button>
-        <button id="play-pause-button" class="control-button">
-            <img id="play-img" src="https://firebasestorage.googleapis.com/v0/b/asocial-16d14.appspot.com/o/asocial_cloud%2Fic_play_circle_fill_black_24dp.png?alt=media&token=5683b0d6-73d1-4a8e-acce-85b326275e30" alt="Play">
-            <img id="pause-img" src="https://firebasestorage.googleapis.com/v0/b/asocial-16d14.appspot.com/o/asocial_cloud%2Fic_pause_circle_fill_black_24dp.png?alt=media&token=b575fa16-1987-4e51-913c-6b825d456f94" alt="Pause">
+    <div id="player-controls" style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
+        <button id="previous-button" class="control-button" style="background-color: transparent; border: none; cursor: pointer; margin-bottom: 10px; color: #fff;">Previous</button>
+        <button id="play-pause-button" class="control-button" style="background-color: transparent; border: none; cursor: pointer; margin-bottom: 10px;">
+            <img id="play-img" src="https://firebasestorage.googleapis.com/v0/b/asocial-16d14.appspot.com/o/asocial_cloud%2Fic_play_circle_fill_black_24dp.png?alt=media&token=5683b0d6-73d1-4a8e-acce-85b326275e30" alt="Play" style="display: block;">
+            <img id="pause-img" src="https://firebasestorage.googleapis.com/v0/b/asocial-16d14.appspot.com/o/asocial_cloud%2Fic_pause_circle_fill_black_24dp.png?alt=media&token=b575fa16-1987-4e51-913c-6b825d456f94" alt="Pause" style="display: none;">
         </button>
-        <button id="next-button" class="control-button">Next</button>
-        <input type="range" id="progress-bar" class="progress-bar" min="0" max="100" value="0">
+        <button id="next-button" class="control-button" style="background-color: transparent; border: none; cursor: pointer; margin-bottom: 10px; color: #fff;">Next</button>
+        <input type="range" id="progress-bar" class="progress-bar" min="0" max="100" value="0" style="width: 80%; -webkit-appearance: none; appearance: none; height: 5px; background-color: #535353; border-radius: 10px; outline: none;">
     </div>
     <audio id="audio-player" autoplay>
         <source id="audio-source" src="" type="audio/mpeg">
         Your browser does not support the audio tag.
     </audio>
 </div>
-
-<style>
-    /* CSS styles */
-    .audio-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-    }
-
-    #audio-details {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    #audio-thumbnail {
-        width: 150px;
-        height: 150px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-    }
-
-    #song-name,
-    #artist-name {
-        margin: 0;
-    }
-
-    #player-controls {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-    }
-
-    .control-button {
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-        margin-bottom: 10px;
-    }
-
-    .progress-bar {
-        width: 80%;
-        -webkit-appearance: none;
-        appearance: none;
-        height: 5px;
-        background-color: #535353;
-        border-radius: 10px;
-        outline: none;
-    }
-
-    .progress-bar::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 10px;
-        height: 10px;
-        background-color: #1DB954;
-        border-radius: 50%;
-        cursor: pointer;
-    }
-
-    .progress-bar::-moz-range-thumb {
-        width: 10px;
-        height: 10px;
-        background-color: #1DB954;
-        border-radius: 50%;
-        cursor: pointer;
-    }
-</style>
 
 <script>
     // JavaScript code
@@ -211,7 +137,6 @@
         }
     });
 </script>
-
 
 </body>
 </html>
