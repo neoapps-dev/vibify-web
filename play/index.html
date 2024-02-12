@@ -1,1 +1,170 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>playClass</title>
+</head>
+<body>
+<div class="audio-container">
+    <div id="audio-details">
+        <img id="audio-thumbnail" src="https://via.placeholder.com/150" alt="Song Thumbnail">
+        <h3 id="song-name">Song Name</h3>
+        <p id="artist-name">Artist Name</p>
+    </div>
+    <div id="player-controls">
+        <button id="play-pause-button" class="control-button">
+            <img id="play-img" src="https://firebasestorage.googleapis.com/v0/b/asocial-16d14.appspot.com/o/asocial_cloud%2Fic_play_circle_fill_black_24dp.png?alt=media&token=5683b0d6-73d1-4a8e-acce-85b326275e30" alt="Play">
+            <img id="pause-img" src="https://firebasestorage.googleapis.com/v0/b/asocial-16d14.appspot.com/o/asocial_cloud%2Fic_pause_circle_fill_black_24dp.png?alt=media&token=b575fa16-1987-4e51-913c-6b825d456f94" alt="Pause">
+        </button>
+        <input type="range" id="progress-bar" class="progress-bar" min="0" max="100" value="0">
+    </div>
+    <audio id="audio-player" autoplay>
+        <source id="audio-source" src="" type="audio/mpeg">
+        Your browser does not support the audio tag.
+    </audio>
+</div>
 
+<style>
+    /* CSS styles */
+    .audio-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
+    #audio-details {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    #audio-thumbnail {
+        width: 150px;
+        height: 150px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    #song-name,
+    #artist-name {
+        margin: 0;
+    }
+
+    #player-controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .control-button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        margin-bottom: 10px;
+    }
+
+    .progress-bar {
+        width: 80%;
+        -webkit-appearance: none;
+        appearance: none;
+        height: 5px;
+        background-color: #535353;
+        border-radius: 10px;
+        outline: none;
+    }
+
+    .progress-bar::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 10px;
+        height: 10px;
+        background-color: #1DB954;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    .progress-bar::-moz-range-thumb {
+        width: 10px;
+        height: 10px;
+        background-color: #1DB954;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+</style>
+
+<script>
+    // JavaScript code
+    document.addEventListener("DOMContentLoaded", function() {
+        const audioPlayer = document.getElementById('audio-player');
+        const audioSource = document.getElementById('audio-source');
+        const audioThumbnail = document.getElementById('audio-thumbnail');
+        const playPauseButton = document.getElementById('play-pause-button');
+        const progressBar = document.getElementById('progress-bar');
+        const playImg = document.getElementById('play-img');
+        const pauseImg = document.getElementById('pause-img');
+        const songNameElement = document.getElementById('song-name');
+        const artistNameElement = document.getElementById('artist-name');
+
+        let isPlaying = false;
+
+        playPauseButton.addEventListener('click', function() {
+            if (isPlaying) {
+                audioPlayer.pause();
+                playImg.style.display = 'block';
+                pauseImg.style.display = 'none';
+            } else {
+                audioPlayer.play();
+                playImg.style.display = 'none';
+                pauseImg.style.display = 'block';
+            }
+            isPlaying = !isPlaying;
+        });
+
+        audioPlayer.addEventListener('timeupdate', function() {
+            const currentTime = audioPlayer.currentTime;
+            const duration = audioPlayer.duration;
+            const progress = (currentTime / duration) * 100;
+            progressBar.value = progress;
+        });
+
+        progressBar.addEventListener('input', function() {
+            const progress = progressBar.value;
+            const duration = audioPlayer.duration;
+            const currentTime = (progress / 100) * duration;
+            audioPlayer.currentTime = currentTime;
+        });
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const audioId = urlParams.get('audioId');
+        const title = urlParams.get('title');
+        const author = urlParams.get('author');
+
+        if (audioId) {
+            const audioUrl = `https://paxsenixjs.deno.dev/download?id=${audioId}&type=audio`;
+            const thumbnailUrl = `https://paxsenixjs.deno.dev/thumbnailHD?id=${audioId}`;
+
+            audioSource.src = audioUrl;
+            audioThumbnail.src = thumbnailUrl;
+            audioPlayer.load();
+
+            if (title) {
+                songNameElement.textContent = title;
+            }
+
+            if (author) {
+                artistNameElement.textContent = author;
+            }
+        }
+    });
+</script>
+
+
+</body>
+</html>
