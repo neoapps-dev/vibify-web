@@ -1,16 +1,19 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>mainClass</title>
+    <title>mainClass</title>
 </head>
 <body>
-
-<body>
     <div class="header-bar">
-        <img src="https://firebasestorage.googleapis.com/v0/b/asocial-16d14.appspot.com/o/asocial_cloud%2Fapp_icon.png?alt=media&token=9ba3c72c-5de3-408a-aa0a-6e0676852408" alt="Vibify Logo" class="logo">
-        <h3>Vibify</h3>
+        <a href="search" style="text-decoration: none; color: inherit;">
+            <img src="https://firebasestorage.googleapis.com/v0/b/asocial-16d14.appspot.com/o/asocial_cloud%2Fapp_icon.png?alt=media&token=9ba3c72c-5de3-408a-aa0a-6e0676852408" alt="Vibify Logo" class="logo">
+            <h3>Vibify</h3>
+        </a>
+        <a href="search" style="text-decoration: none; color: inherit;">
+            <button class="search-button">Search</button>
+        </a>
     </div>
     <h2>Quick Picks</h2>
     <ul id="songs-list"></ul>
@@ -29,18 +32,28 @@
             color: #333;
             padding: 10px 7px;
             display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .logo {
             width: 40px; /* Adjust width as needed */
             height: 40px; /* Maintain aspect ratio */
             margin: 10px;
-            padding: 10px 7px;
         }
 
         h1, h2 {
             color: #333;
             padding: 10px 7px;
+        }
+
+        .search-button {
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
 
         #songs-list {
@@ -142,7 +155,7 @@
                                 // Add event listener for each song item
                                 listItem.addEventListener('click', function() {
                                     const audioId = song.videoId; // Assuming videoId is equivalent to audioId
-                                    window.location.href = `play?audioId=${audioId}&title=${title}&author=${artist}`;
+                                    window.location.href = `play?audioId=${audioId}&title=${encodeURIComponent(song.title)}&author=${encodeURIComponent(song.author)}`;
                                 });
                             });
                         })
