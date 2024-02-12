@@ -21,7 +21,13 @@
         </button>
         <button id="next-button" class="control-button" style="background-color: transparent; border: none; cursor: pointer; margin-left: 10px; color: #fff;">Next</button>
     </div>
-    <input type="range" id="progress-bar" class="progress-bar" min="0" max="100" value="0" style="position: relative; z-index: 1; width: 80%; -webkit-appearance: none; appearance: none; height: 5px; background-color: #535353; border-radius: 10px; outline: none; margin-top: 20px;">
+    <div style="position: relative; z-index: 1; width: 80%;">
+        <input type="range" id="progress-bar" class="progress-bar" min="0" max="100" value="0" style="-webkit-appearance: none; appearance: none; height: 5px; background-color: #535353; border-radius: 10px; outline: none; margin-top: 20px; width: 100%;">
+        <div id="duration-text" style="display: flex; justify-content: space-between; color: #fff; margin-top: 5px;">
+            <span id="current-duration">0:00</span>
+            <span id="total-duration">0:00</span>
+        </div>
+    </div>
     <audio id="audio-player" autoplay style="display: none;">
         <source id="audio-source" src="" type="audio/mpeg">
         Your browser does not support the audio tag.
@@ -43,6 +49,8 @@
         const songNameElement = document.getElementById('song-name');
         const artistNameElement = document.getElementById('artist-name');
         const backgroundOverlay = document.getElementById('background-overlay');
+        const currentDuration = document.getElementById('current-duration');
+        const totalDuration = document.getElementById('total-duration');
 
         let isPlaying = false;
 
@@ -74,6 +82,9 @@
             const duration = audioPlayer.duration;
             const progress = (currentTime / duration) * 100;
             progressBar.value = progress;
+
+            // Update current duration text
+            currentDuration.textContent = formatTime(currentTime);
         });
 
         progressBar.addEventListener('input', function() {
@@ -142,6 +153,12 @@
                 .catch(error => {
                     console.error(`Error fetching ${direction} audio:`, error);
                 });
+        }
+
+        function formatTime(time) {
+            const minutes = Math.floor(time / 60);
+            const seconds = Math.floor(time % 60);
+            return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
         }
     });
 </script>
