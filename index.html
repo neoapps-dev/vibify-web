@@ -1,0 +1,160 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mainClass</title>
+</head>
+<body>
+
+<body>
+    <div class="header-bar">
+        <img src="https://firebasestorage.googleapis.com/v0/b/asocial-16d14.appspot.com/o/asocial_cloud%2Fapp_icon.png?alt=media&token=9ba3c72c-5de3-408a-aa0a-6e0676852408" alt="Vibify Logo" class="logo">
+        <h3>Vibify</h3>
+    </div>
+    <h2>Quick Picks</h2>
+    <ul id="songs-list"></ul>
+
+    <style>
+        /* CSS styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header-bar {
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 10px 7px;
+            display: flex;
+        }
+
+        .logo {
+            width: 40px; /* Adjust width as needed */
+            height: 40px; /* Maintain aspect ratio */
+            margin: 10px;
+            padding: 10px 7px;
+        }
+
+        h1, h2 {
+            color: #333;
+            padding: 10px 7px;
+        }
+
+        #songs-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+
+        .song-item {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            cursor: pointer; /* Add cursor pointer */
+        }
+
+        .thumbnail {
+            margin-right: 20px;
+            width: 80px;
+            height: 80px;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+
+        .song-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .song-details span {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .song-details span:first-child {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .song-details span:last-child {
+            font-style: italic;
+        }
+    </style>
+
+    <script>
+        // JavaScript code
+        document.addEventListener("DOMContentLoaded", function() {
+            function getCountryCode() {
+                return new Promise((resolve, reject) => {
+                    fetch("https://ipapi.co/json/")
+                        .then(response => response.json())
+                        .then(data => {
+                            const countryCode = data.country;
+                            resolve(countryCode);
+                        })
+                        .catch(error => {
+                            reject(error);
+                        });
+                });
+            }
+
+            getCountryCode()
+                .then(countryCode => {
+                    const url = `https://antara.deno.dev/home?gl=${countryCode}`;
+                    fetch(url)
+                        .then(response => response.json())
+                        .then(data => {
+                            const quickPicks = data.results.quick_picks;
+                            const songsList = document.getElementById("songs-list");
+                            songsList.innerHTML = ""; // Clear previous content
+
+                            quickPicks.forEach(song => {
+                                const listItem = document.createElement("li");
+                                listItem.classList.add("song-item");
+
+                                const thumbnail = document.createElement("img");
+                                thumbnail.classList.add("thumbnail");
+                                thumbnail.src = song.thumbnail;
+                                listItem.appendChild(thumbnail);
+
+                                const songDetails = document.createElement("div");
+                                songDetails.classList.add("song-details");
+
+                                const title = document.createElement("span");
+                                title.textContent = song.title;
+                                songDetails.appendChild(title);
+
+                                const artist = document.createElement("span");
+                                artist.textContent = song.author;
+                                songDetails.appendChild(artist);
+
+                                listItem.appendChild(songDetails);
+                                songsList.appendChild(listItem);
+
+                                // Add event listener for each song item
+                                listItem.addEventListener('click', function() {
+                                    const audioId = song.videoId; // Assuming videoId is equivalent to audioId
+                                    window.location.href = `play?audioId=${audioId}&title=${title}&author=${artist}`;
+                                });
+                            });
+                        })
+                        .catch(error => {
+                            console.error("Error fetching data:", error);
+                        });
+                })
+                .catch(error => {
+                    console.error("Error getting country code:", error);
+                });
+        });
+    </script>
+
+</body>
+</html>
