@@ -88,13 +88,16 @@
         });
 
         progressBar.addEventListener('input', function () {
+            // Update current duration text while seeking
+            currentDuration.textContent = formatTime(audioPlayer.currentTime);
+        });
+
+        progressBar.addEventListener('change', function () {
+            // Seek to the selected position
             const progress = progressBar.value;
             const duration = audioPlayer.duration;
             const currentTime = (progress / 100) * duration;
             audioPlayer.currentTime = currentTime;
-
-            // Update current duration text while seeking
-            currentDuration.textContent = formatTime(currentTime);
         });
 
         audioPlayer.addEventListener('loadedmetadata', function () {
@@ -170,6 +173,7 @@
         }
     });
 </script>
+
 
 
 
