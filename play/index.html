@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>playClass</title>
+    <title>playClass</title>
 </head>
 <body>
 <div class="audio-container">
@@ -13,10 +13,12 @@
         <p id="artist-name">Artist Name</p>
     </div>
     <div id="player-controls">
+        <button id="previous-button" class="control-button">Previous</button>
         <button id="play-pause-button" class="control-button">
             <img id="play-img" src="https://firebasestorage.googleapis.com/v0/b/asocial-16d14.appspot.com/o/asocial_cloud%2Fic_play_circle_fill_black_24dp.png?alt=media&token=5683b0d6-73d1-4a8e-acce-85b326275e30" alt="Play">
             <img id="pause-img" src="https://firebasestorage.googleapis.com/v0/b/asocial-16d14.appspot.com/o/asocial_cloud%2Fic_pause_circle_fill_black_24dp.png?alt=media&token=b575fa16-1987-4e51-913c-6b825d456f94" alt="Pause">
         </button>
+        <button id="next-button" class="control-button">Next</button>
         <input type="range" id="progress-bar" class="progress-bar" min="0" max="100" value="0">
     </div>
     <audio id="audio-player" autoplay>
@@ -106,6 +108,8 @@
         const audioSource = document.getElementById('audio-source');
         const audioThumbnail = document.getElementById('audio-thumbnail');
         const playPauseButton = document.getElementById('play-pause-button');
+        const previousButton = document.getElementById('previous-button');
+        const nextButton = document.getElementById('next-button');
         const progressBar = document.getElementById('progress-bar');
         const playImg = document.getElementById('play-img');
         const pauseImg = document.getElementById('pause-img');
@@ -125,6 +129,16 @@
                 pauseImg.style.display = 'block';
             }
             isPlaying = !isPlaying;
+        });
+
+        previousButton.addEventListener('click', function() {
+            // Fetch previous audio
+            fetchPreviousOrNextAudio('previous');
+        });
+
+        nextButton.addEventListener('click', function() {
+            // Fetch next audio
+            fetchPreviousOrNextAudio('next');
         });
 
         audioPlayer.addEventListener('timeupdate', function() {
@@ -161,6 +175,39 @@
             if (author) {
                 artistNameElement.textContent = author;
             }
+        }
+
+        function fetchPreviousOrNextAudio(direction) {
+            fetch(`https://antara.deno.dev/${direction}?id=${audioId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length > 0) {
+                        const nextAudioId = data[0].videoId;
+                        const nextAudioUrl = `https://paxsenixjs.deno.dev/download?id=${nextAudioId}&type=audio`;
+                        const nextThumbnailUrl = data[0].thumbnail;
+
+                        audioSource.src = nextAudioUrl;
+                        audioThumbnail.src = nextThumbnailUrl;
+                        audioPlayer.load();
+                        audioPlayer.play();
+
+                        const nextTitle = data[0].title;
+                        const nextAuthor = data[0].author;
+
+                        if (nextTitle) {
+                            songNameElement.textContent = nextTitle;
+                        }
+
+                        if (nextAuthor) {
+                            artistNameElement.textContent = nextAuthor;
+                        }
+                    } else {
+                        console.log(`No ${direction} audio available.`);
+                    }
+                })
+                .catch(error => {
+                    console.error(`Error fetching ${direction} audio:`, error);
+                });
         }
     });
 </script>
