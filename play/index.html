@@ -6,22 +6,23 @@
     <title>playClass</title>
 </head>
 <body style="margin: 0; padding: 0; background-color: #1a1a1a;">
-<div class="audio-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
-    <div id="audio-details" style="display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; margin-bottom: 20px;">
-        <img id="audio-thumbnail" src="https://via.placeholder.com/150" alt="Song Thumbnail" style="width: 150px; height: 150px; border-radius: 10px; margin-bottom: 20px;">
+<div class="audio-container" style="position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
+    <div id="background-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; filter: blur(10px);"></div>
+    <div id="audio-details" style="position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; margin-bottom: 20px;">
+        <img id="audio-thumbnail" src="https://via.placeholder.com/150" alt="Song Thumbnail" style="width: 300px; height: 300px; border-radius: 10px; margin-bottom: 20px;">
         <h3 id="song-name" style="margin: 0; color: #fff;">Song Name</h3>
         <p id="artist-name" style="margin: 0; color: #fff;">Artist Name</p>
     </div>
-    <div id="player-controls" style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
-        <button id="previous-button" class="control-button" style="background-color: transparent; border: none; cursor: pointer; margin-bottom: 10px; color: #fff;">Previous</button>
-        <button id="play-pause-button" class="control-button" style="background-color: transparent; border: none; cursor: pointer; margin-bottom: 10px;">
+    <div id="player-controls" style="position: relative; z-index: 1; display: flex; align-items: center; justify-content: center;">
+        <button id="previous-button" class="control-button" style="background-color: transparent; border: none; cursor: pointer; margin-right: 10px; color: #fff;">Previous</button>
+        <button id="play-pause-button" class="control-button" style="background-color: transparent; border: none; cursor: pointer; margin-right: 10px;">
             <img id="play-img" src="https://firebasestorage.googleapis.com/v0/b/asocial-16d14.appspot.com/o/asocial_cloud%2Fic_play_circle_fill_black_24dp.png?alt=media&token=5683b0d6-73d1-4a8e-acce-85b326275e30" alt="Play" style="display: block;">
             <img id="pause-img" src="https://firebasestorage.googleapis.com/v0/b/asocial-16d14.appspot.com/o/asocial_cloud%2Fic_pause_circle_fill_black_24dp.png?alt=media&token=b575fa16-1987-4e51-913c-6b825d456f94" alt="Pause" style="display: none;">
         </button>
-        <button id="next-button" class="control-button" style="background-color: transparent; border: none; cursor: pointer; margin-bottom: 10px; color: #fff;">Next</button>
-        <input type="range" id="progress-bar" class="progress-bar" min="0" max="100" value="0" style="width: 80%; -webkit-appearance: none; appearance: none; height: 5px; background-color: #535353; border-radius: 10px; outline: none;">
+        <button id="next-button" class="control-button" style="background-color: transparent; border: none; cursor: pointer; margin-left: 10px; color: #fff;">Next</button>
     </div>
-    <audio id="audio-player" autoplay>
+    <input type="range" id="progress-bar" class="progress-bar" min="0" max="100" value="0" style="position: relative; z-index: 1; width: 80%; -webkit-appearance: none; appearance: none; height: 5px; background-color: #535353; border-radius: 10px; outline: none; margin-top: 20px;">
+    <audio id="audio-player" autoplay style="display: none;">
         <source id="audio-source" src="" type="audio/mpeg">
         Your browser does not support the audio tag.
     </audio>
@@ -41,6 +42,7 @@
         const pauseImg = document.getElementById('pause-img');
         const songNameElement = document.getElementById('song-name');
         const artistNameElement = document.getElementById('artist-name');
+        const backgroundOverlay = document.getElementById('background-overlay');
 
         let isPlaying = false;
 
@@ -101,6 +103,9 @@
             if (author) {
                 artistNameElement.textContent = author;
             }
+
+            // Set background image and blur effect
+            backgroundOverlay.style.backgroundImage = `url('${thumbnailUrl}')`;
         }
 
         function fetchPreviousOrNextAudio(direction) {
@@ -127,6 +132,9 @@
                         if (nextAuthor) {
                             artistNameElement.textContent = nextAuthor;
                         }
+
+                        // Update background image and blur effect
+                        backgroundOverlay.style.backgroundImage = `url('${nextThumbnailUrl}')`;
                     } else {
                         console.log(`No ${direction} audio available.`);
                     }
