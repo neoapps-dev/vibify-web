@@ -1,0 +1,67 @@
+/* Import Salsa font */
+@import url('https://fonts.googleapis.com/css2?family=Salsa&display=swap');
+
+/* Import Material 3 UI styles */
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700|Roboto:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Icons&display=block');
+
+/* Custom CSS styles */
+body {
+    font-family: 'Salsa', sans-serif; /* Set font-family to Salsa */
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #181818, #000000); /* Spotify-like background gradient */
+}
+
+h2 {
+    color: #1DB954; /* Spotify's primary color */
+    text-align: center;
+    margin-top: 20px;
+    font-size: 24px;
+}
+
+#search-results {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#search-results li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: #282828; /* Spotify's background color */
+    border-radius: 10px;
+    color: #fff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+}
+
+#search-results li img {
+    width: 120px;
+    height: 120px;
+    border-radius: 10px 0 0 10px;
+}
+
+#search-results li .details {
+    flex: 1;
+    padding: 10px;
+    color: #fff; /* White text color */
+}
+
+#search-input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 10px;
+    border: none;
+    border-radius: 20px;
+    background-color: #282828; /* Spotify's input field color */
+    color: #fff; /* White text color */
+    font-size: 16px;
+    font-family: 'Salsa', sans-serif; /* Set font-family to Salsa */
+    outline: none;
+    box-sizing: border-box;
+}
+
+#search-input::placeholder {
+    color: #bdbdbd; /* Placeholder text color */
+}

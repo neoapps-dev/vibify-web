@@ -1,141 +1,16 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>searchClass</title>
+    <title>Search - Vibify</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-    <style>
-        /* CSS styles */
-        h2 {
-            color: #333;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        #search-results {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        #search-results li {
-            margin: 10px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-            width: 200px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer; /* Add cursor pointer */
-        }
-
-        #search-results li img {
-            width: 120px;
-            height: 120px;
-            border-radius: 10px; /* Rounded corners */
-            margin-bottom: 10px;
-        }
-
-        #search-results li span {
-            color: #333;
-            text-align: center;
-        }
-
-        #search-input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-    </style>
     <input type="text" id="search-input" placeholder="Enter your search query...">
     <h2>Search Results</h2>
     <ul id="search-results"></ul>
 
-    <script>
-        // JavaScript code
-        document.addEventListener("DOMContentLoaded", function() {
-            const searchInput = document.getElementById('search-input');
-            const searchResultsList = document.getElementById('search-results');
-
-            // Function to parse URL parameters
-            function getUrlParams(url) {
-                const params = {};
-                const urlSearchParams = new URLSearchParams(url.split('?')[1]);
-                for (const param of urlSearchParams) {
-                    params[param[0]] = param[1];
-                }
-                return params;
-            }
-
-            // Function to perform search and display results
-            function performSearch(query) {
-                const apiUrl = `https://antara.deno.dev/search?q=${query}`;
-
-                fetch(apiUrl)
-                    .then(response => response.json())
-                    .then(data => {
-                        const searchResults = data.result;
-                        searchResultsList.innerHTML = ""; // Clear previous results
-
-                        searchResults.forEach(result => {
-                            const listItem = document.createElement("li");
-                            const thumbnail = document.createElement("img");
-                            thumbnail.src = result.thumbnail;
-                            listItem.appendChild(thumbnail);
-
-                            const title = document.createElement("span");
-                            title.textContent = result.title;
-                            listItem.appendChild(title);
-
-                            const author = document.createElement("span");
-                            author.textContent = result.author;
-                            listItem.appendChild(author);
-
-                            // Add onclick event listener to each search result item
-                            listItem.addEventListener('click', function() {
-                                const audioId = result.videoId;
-                                const title = encodeURIComponent(result.title);
-                                const author = encodeURIComponent(result.author);
-                                window.location.href = `play?title=${title}&author=${author}&audioId=${audioId}`;
-                            });
-
-                            searchResultsList.appendChild(listItem);
-                        });
-                    })
-                    .catch(error => {
-                        console.error("Error fetching search results:", error);
-                    });
-            }
-
-            // Get search query from URL and perform search
-            const urlParams = getUrlParams(window.location.href);
-            const searchQuery = urlParams.q;
-            if (searchQuery) {
-                searchInput.value = searchQuery;
-                performSearch(searchQuery);
-            } else {
-                console.error("No search query provided in URL.");
-            }
-
-            // Event listener for input field
-            searchInput.addEventListener('change', function() {
-                const query = searchInput.value;
-                performSearch(query);
-            });
-        });
-    </script>
-
-
+    <script src="script.js"></script>
 </body>
 </html>
