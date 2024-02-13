@@ -20,8 +20,8 @@ document.addEventListener("DOMContentLoaded", function () {
     let lyricsVisible = true;
 
     // Set initial button display state
-    playIcon.style.display = 'block';
-    pauseIcon.style.display = 'none';
+    playIcon.style.display = 'none';
+    pauseIcon.style.display = 'block';
 
     playPauseButton.addEventListener('click', function () {
         togglePlay();
@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     audioPlayer.addEventListener('timeupdate', function () {
         updateProgressBar();
-        updateDurationText(); // Call updateDurationText here
+        
         syncLyrics();
     });
 
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const urlParams = new URLSearchParams(window.location.search);
     const audioId = urlParams.get('audioId');
-    const title = urlParams.get('title');
+    const title = urlParams.get('title').replace("+"," ");
     const author = urlParams.get('author');
 
     if (audioId) {
