@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 searchResultsList.innerHTML = ""; // Clear previous results
 
                 searchResults.forEach(result => {
-                    const listItem = document.createElement("li");
+                    const listItem = document.createElement("div");
                     const thumbnail = document.createElement("img");
                     thumbnail.src = result.thumbnail;
                     listItem.appendChild(thumbnail);
