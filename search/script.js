@@ -31,7 +31,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     const title = document.createElement("span");
                     title.textContent = sanitizeText(result.title);
                     listItem.appendChild(title);
-
+const paar = document.createElement("p");
+listItem.appendChild(paar);
                     const author = document.createElement("span");
                     author.textContent = sanitizeText(result.author);
                     listItem.appendChild(author);
