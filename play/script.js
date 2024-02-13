@@ -169,7 +169,7 @@ document.addEventListener("DOMContentLoaded", function () {
         fetch(`https://paxsenix.deno.dev/music/lyrics/sync?type=text&id=${audioId}`)
             .then(response => response.text())
             .then(data => {
-                if (data || data != '{"info":"theres no lyrics"}') {
+                if (data || !(data == '{"info":"theres no lyrics"}')) {
                     lyricsView.innerHTML = removeLrcTags(data);
                 } else {
                     lyricsView.textContent = "Lyrics not found.";
