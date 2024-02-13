@@ -1,0 +1,102 @@
+/* CSS styles */
+body {
+    font-family: 'Salsa', sans-serif;
+    background-color: #000;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+.header-bar {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    width: 40px; /* Adjust width as needed */
+    height: 40px; /* Maintain aspect ratio */
+    margin-right: 10px;
+}
+
+.title {
+    font-family: 'Salsa', cursive;
+    font-size: 24px;
+    margin: 0;
+}
+
+.heading {
+    font-family: 'Salsa', cursive;
+    color: #fff;
+    font-size: 28px;
+    margin: 20px;
+}
+
+.icon-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.icon-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+}
+
+.material-icons {
+    font-size: 24px;
+    color: #fff;
+}
+
+#songs-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.song-item {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.song-item:hover {
+    background-color: #444;
+}
+
+.thumbnail {
+    margin-right: 20px;
+    width: 80px;
+    height: 80px;
+    border-radius: 5px;
+    object-fit: cover;
+}
+
+.song-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.song-details span {
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.song-details span:first-child {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.song-details span:last-child {
+    font-style: italic;
+}
