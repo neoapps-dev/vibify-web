@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         backgroundOverlay.style.backgroundImage = `url('${thumbnailUrl}')`;
 
-        fetchLyrics(audioId);
+        fetchLyrics(author, title);
     }
 
     function togglePlay() {
@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     backgroundOverlay.style.backgroundImage = `url('${nextThumbnailUrl}')`;
 
-                    fetchLyrics(nextAudioId);
+                    fetchLyrics(nextAuthor, nextTitle);
                 } else {
                     console.log(`No ${direction} audio available.`);
                 }
@@ -165,12 +165,12 @@ document.addEventListener("DOMContentLoaded", function () {
         return `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
     }
 
-    function fetchLyrics(audioId) {
+    function fetchLyrics(artist, title) {
         fetch(`https://paxsenix.deno.dev/music/lyrics/sync?type=text&id=${audioId}`)
-            .then(response => response.text())
+            .then(response => response.json())
             .then(data => {
-                if (data) {
-                    lyricsView.textContent = data;
+                if (data.lyrics) {
+                    lyricsView.textContent = removeLrcTags(data.lyrics);
                 } else {
                     lyricsView.textContent = "Lyrics not found.";
                 }
@@ -178,6 +178,10 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => {
                 console.error('Error fetching lyrics:', error);
             });
+    }
+
+    function removeLrcTags(line) {
+        return line.replace(/\[\d+:\d+\.\d+\]/g, '').trim();
     }
 
     function syncLyrics() {
@@ -192,10 +196,35 @@ document.addEventListener("DOMContentLoaded", function () {
                 const lineTime = minutes * 60 + seconds;
                 if (lineTime > currentTime) {
                     const prevLine = i > 0 ? lines[i - 1] : '';
-                    lyricsView.innerHTML = `<span class="prev-line">${prevLine}</span><span class="current-line">${line}</span><span class="next-line">${lines[i + 1]}</span>`;
+                    const currentLine = lines[i];
+                    const nextLine = i < lines.length - 1 ? lines[i + 1] : '';
+
+                    const currentWord = getCurrentWord(currentLine, currentTime - lineTime + minutes * 60);
+                    const formattedLine = removeLrcTags(currentLine);
+                    const formattedPrevLine = removeLrcTags(prevLine);
+                    const formattedNextLine = removeLrcTags(nextLine);
+
+                    const styledLines = `<span class="prev-line">${formattedPrevLine}</span>` +
+                                        `<span class="current-line">${formattedLine.replace(currentWord, `<span class="highlight-word">${currentWord}</span>`)}</span>` +
+                                        `<span class="next-line">${formattedNextLine}</span>`;
+
+                    lyricsView.innerHTML = styledLines;
                     break;
                 }
             }
         }
+    }
+
+    function getCurrentWord(line, elapsedTime) {
+        const words = line.split(/\s+/);
+        let totalWordTime = 0;
+        for (let i = 0; i < words.length; i++) {
+            const wordTime = words[i].length * 0.3; // Estimate word duration based on word length
+            totalWordTime += wordTime;
+            if (totalWordTime >= elapsedTime) {
+                return words[i];
+            }
+        }
+        return '';
     }
 });
