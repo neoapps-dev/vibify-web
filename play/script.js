@@ -170,7 +170,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => response.json())
             .then(data => {
                 if (data.lyrics) {
-                    lyricsView.textContent = removeLrcTags(data.lyrics);
+                    lyricsView.innerHTML = removeLrcTags(data.lyrics);
                 } else {
                     lyricsView.textContent = "Lyrics not found.";
                 }
