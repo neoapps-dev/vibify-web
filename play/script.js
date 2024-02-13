@@ -208,7 +208,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                         `<span class="current-line">${formattedLine.replace(currentWord, `<span class="highlight-word">${currentWord}</span>`)}</span>` +
                                         `<span class="next-line">${formattedNextLine}</span>`;
 
-                    lyricsView.innerHTML = styledLines;
+                    lyricsView.innerHTML =  '<li>' + styledLines;
                     break;
                 }
             }
