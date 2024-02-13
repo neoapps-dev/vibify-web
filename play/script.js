@@ -76,7 +76,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         backgroundOverlay.style.backgroundImage = `url('${thumbnailUrl}')`;
 
-        fetchLyrics(author, title);
+        fetchLyrics(audioId);
     }
 
     function togglePlay() {
@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     backgroundOverlay.style.backgroundImage = `url('${nextThumbnailUrl}')`;
 
-                    fetchLyrics(nextAuthor, nextTitle);
+                    fetchLyrics(nextAudioId);
                 } else {
                     console.log(`No ${direction} audio available.`);
                 }
@@ -165,12 +165,12 @@ document.addEventListener("DOMContentLoaded", function () {
         return `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
     }
 
-    function fetchLyrics(artist, title) {
+    function fetchLyrics(audioId) {
         fetch(`https://paxsenix.deno.dev/music/lyrics/sync?type=text&id=${audioId}`)
-            .then(response => response.json())
+            .then(response => response.text())
             .then(data => {
-                if (data.lyrics) {
-                    lyricsView.innerHTML = removeLrcTags(data.lyrics);
+                if (data) {
+                    lyricsView.innerHTML = removeLrcTags(data);
                 } else {
                     lyricsView.textContent = "Lyrics not found.";
                 }
