@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const pauseIcon = document.getElementById('pause-icon');
     const durationText = document.getElementById('duration-text');
 
-    let isPlaying = false;
+    let isPlaying = true;
     let lyricsVisible = true;
 
     // Set initial button display state
