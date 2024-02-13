@@ -181,7 +181,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function removeLrcTags(line) {
-        return line.replace(/\[\d+:\d+\.\d+\]/g, '').trim();
+        return line;
     }
 
     function syncLyrics() {
