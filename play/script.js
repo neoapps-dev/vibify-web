@@ -59,8 +59,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const author = urlParams.get('author');
 
     if (audioId) {
-        const audioUrl = `https://paxsenixjs.deno.dev/download?id=${audioId}&type=audio`;
-        const thumbnailUrl = `https://paxsenixjs.deno.dev/thumbnailHD?id=${audioId}`;
+        const audioUrl = `https://youtube-data.deno.dev/download?id=${audioId}&type=audio`;
+        const thumbnailUrl = `https://youtube-data.deno.dev/thumbnailHD?id=${audioId}`;
 
         audioSource.src = audioUrl;
         audioThumbnail.src = thumbnailUrl;
